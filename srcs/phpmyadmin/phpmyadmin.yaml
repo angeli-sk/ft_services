@@ -1,0 +1,25 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    phpmyadmin.yaml                                    :+:    :+:             #
+#                                                      +:+                     #
+#    By: akramp <akramp@student.codam.nl>             +#+                      #
+#                                                    +#+                       #
+#    Created: 2020/11/09 17:34:12 by akramp        #+#    #+#                  #
+#    Updated: 2020/11/09 19:52:01 by akramp        ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin-service
+spec:
+  type: NodePort
+  selector:
+    app: phpmyadmin
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
