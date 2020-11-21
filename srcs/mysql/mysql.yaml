@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      volumes:
+        - name: mysql-pv
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+      containers:
+      - name: mysql
+        image: mysql
+        imagePullPolicy: Never
+        env:
+        - name: DB_NAME
+          value: wordpress
+        - name: DB_USER
+          value: mysql
+        - name: DB_PASS
+          value: password
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+          - name: mysql-pv
+            mountPath: /var/lib/mysql/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  annotations:
+    metallb.universe.tf/address-pool: shared
+spec:
+  selector:
+    app: mysql
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: mysql-pv
+    labels:
+        type: local
+spec:
+    storageClassName: mysql-db
+    accessModes:
+        - ReadWriteOnce
+    capacity:
+        storage: 1Gi
+    hostPath:
+        path: /mnt/mysql/
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: mysql-pvc
+spec:
+    storageClassName: mysql-db
+    accessModes:
+        - ReadWriteOnce
+    resources:
+        requests:
+            storage: 1Gi

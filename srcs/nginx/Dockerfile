@@ -6,11 +6,11 @@
 #    By: akramp <akramp@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/08 14:30:03 by akramp        #+#    #+#                  #
-#    Updated: 2020/11/09 15:59:44 by akramp        ########   odam.nl          #
+#    Updated: 2020/11/14 13:51:51 by akramp        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-FROM alpine:3.7
+FROM alpine:3.11
 
 RUN apk update && \
 	apk upgrade && \
