@@ -6,7 +6,7 @@
 #    By: akramp <akramp@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/08 14:30:03 by akramp        #+#    #+#                  #
-#    Updated: 2020/11/14 13:51:51 by akramp        ########   odam.nl          #
+#    Updated: 2020/11/23 17:46:21 by akramp        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RUN apk update && \
 	apk upgrade && \
 	apk add nginx \
 	openssl \
-	openssh
+	openssh --no-cache
 
 RUN mkdir -p /run/nginx && mkdir /www
 

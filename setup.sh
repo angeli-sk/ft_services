@@ -12,4 +12,6 @@ docker build -t mysql ./srcs/mysql
 kubectl apply -f ./srcs/mysql/mysql.yaml
 docker build -t wordpress ./srcs/wordpress
 kubectl apply -f ./srcs/wordpress/wordpress.yaml
+docker build -t phpmyadmin ./srcs/phpmyadmin
+kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 minikube dashboard

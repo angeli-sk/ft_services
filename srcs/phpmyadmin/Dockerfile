@@ -6,30 +6,40 @@
 #    By: akramp <akramp@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/09 15:59:28 by akramp        #+#    #+#                  #
-#    Updated: 2020/11/14 13:51:35 by akramp        ########   odam.nl          #
+#    Updated: 2020/11/23 21:44:21 by akramp        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:3.11
 
+# RUN apk add phpmyadmin nginx --no-cache
+
+
 RUN apk update && \
-	apk upgrade && \
-	apk add php-fpm \
-	php-mysql \
-	php7.3 \
-	php7.3-fpm \
-	php7.3-mysql \
-	php-common \
-	php7.3-cli \
-	php7.3-common \
-	php7.3-json \
-	php7.3-opcache \
-	php7.3-readline \
-	php7.3-mbstring \
-	nginx
+    apk add nginx && \
+    apk add lighttpd php7-json \
+	php7 php7-fpm \
+	php7-session php7-mysqli \
+	php7-mbstring --no-cache
+
+RUN adduser -D -g 'www' www && \
+	mkdir /www && \
+	chown -R www:www /var/lib/nginx && \
+	chown -R www:www /www && \
+	mkdir -p /var/run/nginx
+
+RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-english.tar.gz
+RUN tar -xzvf phpMyAdmin-5.0.2-english.tar.gz
+RUN mv phpMyAdmin-5.0.2-english /www/phpmyadmin
+RUN mkdir /www/phpmyadmin/tmp
+RUN chown -R www:www /www/phpmyadmin/tmp
+
+RUN adduser -D user
+RUN echo "user:user" | chpasswd
+
+COPY config.inc.php /www/phpmyadmin/config.inc.php
+COPY nginx.conf	/etc/nginx/nginx.conf
 
 EXPOSE 5000
 
-RUN mkdir -p /run/nginx && mkdir /www
-
-CMD nginx && tail -f /dev/null
+CMD php-fpm7 && php -S 0.0.0.0:5000 -t /www/phpmyadmin

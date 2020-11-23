@@ -52,7 +52,7 @@ spec:
         imagePullPolicy: Never
         env:
         - name: WORDPRESS_DB_HOST
-          value: wordpress-mysql
+          value: mysql
         - name: WORDPRESS_DB_PASSWORD
           value: password
           # valueFrom:
