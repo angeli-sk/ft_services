@@ -29,7 +29,7 @@ $cfg['Servers'][$i]['compress'] = false;
 /* User used to manipulate with storage */
 // $cfg['Servers'][$i]['controlhost'] = '';
 // $cfg['Servers'][$i]['controlport'] = '';
-$cfg['Servers'][$i]['controluser'] = 'angi';
+$cfg['Servers'][$i]['controluser'] = 'mysql';
 $cfg['Servers'][$i]['controlpass'] = 'password';
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
 
