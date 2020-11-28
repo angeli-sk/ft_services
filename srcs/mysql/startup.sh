@@ -6,10 +6,13 @@ if [ ! -d "/run/mysqld" ]; then
 fi
 chown -R mysql:mysql /var/lib/mysql
 echo "CREATE DATABASE IF NOT EXISTS $DB_NAME;" >> /tmp/sql
+echo "CREATE DATABASE IF NOT EXISTS phpMyAdmin;" >> /tmp/sql
+echo "CREATE DATABASE IF NOT EXISTS phpmyadmin;" >> /tmp/sql
 echo "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';" >> /tmp/sql
 # echo "SET PASSWORD FOR '$DB_USER'@'%'=PASSWORD('${DB_PASS}') ;" >> /tmp/sql
 # echo "GRANT ALL ON *.* TO '$DB_USER'@'127.0.0.1' IDENTIFIED BY '$DB_PASS' WITH GRANT OPTION;" >> /tmp/sql
 # echo "GRANT ALL ON *.* TO '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS' WITH GRANT OPTION;" >> /tmp/sql
 echo "GRANT ALL ON *.* TO '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS' WITH GRANT OPTION;" >> /tmp/sql
 echo "FLUSH PRIVILEGES;" >> /tmp/sql
+cat /tmp/create_tables.sql >> /tmp/sql
 /usr/bin/mysqld --user=mysql --console --init_file=/tmp/sql

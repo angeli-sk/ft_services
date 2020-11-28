@@ -6,7 +6,7 @@
 #    By: akramp <akramp@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/09 15:59:28 by akramp        #+#    #+#                  #
-#    Updated: 2020/11/23 21:44:21 by akramp        ########   odam.nl          #
+#    Updated: 2020/11/25 17:30:19 by angeli        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ RUN apk update && \
     apk add lighttpd php7-json \
 	php7 php7-fpm \
 	php7-session php7-mysqli \
-	php7-mbstring --no-cache
+	php7-mbstring mysql --no-cache
 
 RUN adduser -D -g 'www' www && \
 	mkdir /www && \
@@ -36,6 +36,8 @@ RUN chown -R www:www /www/phpmyadmin/tmp
 
 RUN adduser -D user
 RUN echo "user:user" | chpasswd
+
+# RUN /usr/bin/mysqld --user=mysql --init_file=/www/phpmyadmin/sql/create_tables.sql
 
 COPY config.inc.php /www/phpmyadmin/config.inc.php
 COPY nginx.conf	/etc/nginx/nginx.conf

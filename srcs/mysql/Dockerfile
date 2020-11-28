@@ -6,7 +6,7 @@
 #    By: angeli <angeli@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/11 14:21:48 by angeli        #+#    #+#                  #
-#    Updated: 2020/11/23 14:21:04 by akramp        ########   odam.nl          #
+#    Updated: 2020/11/25 18:03:06 by angeli        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ RUN addgroup mysql mysql
 
 COPY ./my.cnf /etc/my.cnf
 COPY ./startup.sh /tmp/startup.sh
+COPY ./create_tables.sql /tmp
 RUN chmod +x /tmp/startup.sh
 
 VOLUME /var/lib/mysql
