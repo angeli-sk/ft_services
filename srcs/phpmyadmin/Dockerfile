@@ -6,7 +6,7 @@
 #    By: akramp <akramp@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/09 15:59:28 by akramp        #+#    #+#                  #
-#    Updated: 2020/11/25 17:30:19 by angeli        ########   odam.nl          #
+#    Updated: 2020/11/28 16:02:19 by akramp        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,8 @@ RUN mv phpMyAdmin-5.0.2-english /www/phpmyadmin
 RUN mkdir /www/phpmyadmin/tmp
 RUN chown -R www:www /www/phpmyadmin/tmp
 
-RUN adduser -D user
-RUN echo "user:user" | chpasswd
+# RUN adduser -D user
+# RUN echo "user:user" | chpasswd
 
 # RUN /usr/bin/mysqld --user=mysql --init_file=/www/phpmyadmin/sql/create_tables.sql
 

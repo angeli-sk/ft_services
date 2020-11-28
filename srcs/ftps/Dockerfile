@@ -5,35 +5,31 @@
 #                                                      +:+                     #
 #    By: akramp <akramp@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
-#    Created: 2020/11/08 14:30:03 by akramp        #+#    #+#                  #
-#    Updated: 2020/11/28 20:04:42 by akramp        ########   odam.nl          #
+#    Created: 2020/11/28 16:11:18 by akramp        #+#    #+#                  #
+#    Updated: 2020/11/28 18:30:48 by akramp        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:3.11
 
 RUN apk update && \
-	apk upgrade && \
-	apk add nginx \
-	openssl \
-	openssh --no-cache
+	apk add openssl &&\
+	apk add vsftpd --no-cache
 
-RUN mkdir -p /run/nginx && mkdir /www
+RUN mkdir -p /ftps
 
-#Generates new ssl certifacate
 RUN openssl genrsa -out /etc/ssl/certs/domain.key 2048 && \
-    openssl req -x509 -days 356 -nodes -new -key /etc/ssl/certs/domain.key \
+	openssl req -x509 -days 356 -nodes -new -key /etc/ssl/certs/domain.key \
     -subj '/C=NL/ST=NH/L=Amsterdam/O=Codam/CN=domain' -out /etc/ssl/certs/domain.crt
 
-#Creates ssh key and set user and password
-RUN ssh-keygen -A
-RUN adduser -D user
+RUN adduser -D user -h /ftps
 RUN echo "user:user" | chpasswd
 
-#Configures nginx
-COPY ./nginx.conf etc/nginx/nginx.conf
-COPY ./index.html www
+EXPOSE 20 21 30021
 
-EXPOSE 80 443 22
+COPY setup.sh /
+RUN chmod +x /setup.sh
+COPY vsftpd.conf /etc/vsftpd/vsftpd.conf
 
-CMD nginx && /usr/sbin/sshd && tail -f /dev/null
+CMD ./setup.sh
+#CMD vsftpd /etc/vsftpd/vsftpd.conf
