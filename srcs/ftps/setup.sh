@@ -8,6 +8,7 @@ TOKEN=$(cat ${SERVICEACCOUNT}/token)
 # Reference the internal certificate authority (CA)
 CACERT=${SERVICEACCOUNT}/ca.crt
 # Explore the API with TOKEN
-URL=$(curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${APISERVER}/api/v1/namespaces/default/services/ftps/ 2>/dev/null| jq -r '.status | .loadBalancer | .ingress | .[] | .ip')
-echo "pasv_address=$URL" >> /etc/vsftpd/vsftpd.conf
+#URL=$(curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${APISERVER}/api/v1/namespaces/default/services/ftps/ 2>/dev/null| jq -r '.status | .loadBalancer | .ingress | .[] | .ip')
+#echo pasv_address=$URL >> /etc/vsftpd/vsftpd.conf
+echo "pasv_address=192.168.99.240" >> /etc/vsftpd/vsftpd.conf
 vsftpd /etc/vsftpd/vsftpd.conf

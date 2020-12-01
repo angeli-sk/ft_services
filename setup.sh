@@ -2,6 +2,7 @@ sh ./srcs/peercleanup.sh
 minikube start --driver=virtualbox --disk-size=5GB
 minikube addons enable dashboard
 minikube addons enable metallb
+minikube addons enable metrics-server
 
 kubectl apply -f ./srcs/metallb/metallb.yaml
 eval $(minikube docker-env)
@@ -16,4 +17,6 @@ docker build -t phpmyadmin ./srcs/phpmyadmin
 kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 docker build -t ftps ./srcs/ftps
 kubectl apply -f ./srcs/ftps/ftps.yaml
+docker build -t influxdb ./srcs/influxdb
+kubectl apply -f ./srcs/influxdb/influxdb.yaml
 minikube dashboard
