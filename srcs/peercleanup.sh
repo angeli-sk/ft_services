@@ -47,7 +47,7 @@ kubectl delete service/influxdb-svc
 # kubectl delete configMaps/influxdb-config
 
 echo "${Yellow}-------------------------- Telegraf -----------------------------${Color_Off}"
-kubectl delete deployment/telegraf-deployment
+kubectl delete deployment/telegraf
 kubectl delete service/telegraf-svc
 
 echo "${Yellow}-------------------------- Clusterroles -----------------------------${Color_Off}"

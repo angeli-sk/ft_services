@@ -6,7 +6,7 @@
 #    By: akramp <akramp@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/08 14:30:03 by akramp        #+#    #+#                  #
-#    Updated: 2020/11/28 20:04:42 by akramp        ########   odam.nl          #
+#    Updated: 2020/12/14 22:26:26 by akramp        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,10 @@ RUN echo "user:user" | chpasswd
 #Configures nginx
 COPY ./nginx.conf etc/nginx/nginx.conf
 COPY ./index.html www
+COPY ./ngxstart.sh ./
+RUN chmod +x ngxstart.sh
 
 EXPOSE 80 443 22
 
-CMD nginx && /usr/sbin/sshd && tail -f /dev/null
+CMD ./ngxstart.sh
+# CMD nginx && /usr/sbin/sshd && tail -f /dev/null
